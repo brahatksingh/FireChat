@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "867509740016",
+    "firebase_url": "https://firechat-931d2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "firechat-931d2",
+    "storage_bucket": "firechat-931d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867509740016:android:93ef27101b891337fe7d35",
+        "android_client_info": {
+          "package_name": "com.brahatksingh.firechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867509740016-ckfcmnnagtj4v3d8hkmjc9hruhce4dod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brahatksingh.firechat",
+            "certificate_hash": "ad178272c0754235288d3ebc2062dcf530205068"
+          }
+        },
+        {
+          "client_id": "867509740016-rukaqk6pjhvteloc9g78isj1v4t3h7kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF1YpWFdWlvj3W0pJoJAHOaJ-f9spgvSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867509740016-rukaqk6pjhvteloc9g78isj1v4t3h7kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867509740016:android:057b7e4475dbc286fe7d35",
+        "android_client_info": {
+          "package_name": "com.brahatksingh.firechatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867509740016-sp7c8495qejp5t9om5d4tpgrhvsc4755.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brahatksingh.firechatapp",
+            "certificate_hash": "ad178272c0754235288d3ebc2062dcf530205068"
+          }
+        },
+        {
+          "client_id": "867509740016-rukaqk6pjhvteloc9g78isj1v4t3h7kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF1YpWFdWlvj3W0pJoJAHOaJ-f9spgvSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867509740016-rukaqk6pjhvteloc9g78isj1v4t3h7kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
