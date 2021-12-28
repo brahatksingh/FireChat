@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".UI.Activities.SignUpActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/pb_signup"
+        style="@style/SpinKitView.Small.FoldingCube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:SpinKit_Color="@color/AppLightBlue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_su"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toTopOf="@id/signup_etv_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/signup_imgv_photo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/iconbig" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/signup_imgv_photo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_su"
+        app:layout_constraintEnd_toStartOf="@+id/icon_su"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/icon_su"
+        android:src="@drawable/profilepicnormall"
+        />
+
+    <TextView
+        android:id="@+id/signup_tv_selectPhoto"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="Select Photo"
+        android:textColor="#ffffff"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/signup_imgv_photo"
+        app:layout_constraintEnd_toEndOf="@+id/signup_imgv_photo"
+        app:layout_constraintStart_toStartOf="@+id/signup_imgv_photo"
+        app:layout_constraintTop_toTopOf="@+id/signup_imgv_photo"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <EditText
+        android:id="@+id/signup_etv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:textColor="#000000"
+        android:hint="Name"
+        android:textColorHint="#808080"
+        android:textSize="16dp"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/signup_etv_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_su" />
+
+    <EditText
+        android:id="@+id/signup_etv_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:textColorHint="#808080"
+        android:textSize="16dp"
+        android:hint="Email"
+        android:textColor="#000000"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/signup_etv_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_etv_name" />
+
+
+    <EditText
+        android:id="@+id/signup_etv_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16dp"
+        android:ems="10"
+        android:textColorHint="#808080"
+        android:hint="Password"
+        android:textColor="#000000"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/signup_btn_signUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_etv_email" />
+
+    <Button
+        android:id="@+id/signup_btn_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignUp"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_etv_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
