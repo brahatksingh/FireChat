@@ -20,6 +20,8 @@ import kotlinx.coroutines.withContext
 import android.net.Uri
 import android.util.Log
 import com.brahatksingh.firechatapp.Data.Models.UserInfo
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -29,8 +31,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var firebaseDatabase: FirebaseDatabase
     val TAG ="SIGNUPATAG"
     var selectedPhoto : Uri? = null
-    var IMAGE_RESPONE_CODE = 1;
-    var isOk = false;
+    var IMAGE_RESPONE_CODE = 1
+    var isOk = false
     val imageUrl : String = "."
     var userUID = "."
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,30 +81,31 @@ class SignUpActivity : AppCompatActivity() {
                 selectedPhoto = data?.data
                 binding.signupImgvPhoto.setImageURI(selectedPhoto)
             }
-            else {
-                val context = this
-                selectedPhoto = Uri.parse(
-                    ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                        + context.getResources().getResourcePackageName(R.drawable.profilepicnormall) + '/'
-                        + context.getResources().getResourceTypeName(R.drawable.profilepicnormall) + '/'
-                        + context.getResources().getResourceEntryName(R.drawable.profilepicnormall) )
-            }
-
         }
     }
 
     private fun createAccount(email : String, password : String,name:String) {
         val context = this
-        selectedPhoto = Uri.parse(
-            ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                    + context.getResources().getResourcePackageName(R.drawable.profilepicnormall) + '/'
-                    + context.getResources().getResourceTypeName(R.drawable.profilepicnormall) + '/'
-                    + context.getResources().getResourceEntryName(R.drawable.profilepicnormall) )
-        lifecycleScope.async(Dispatchers.Main) {
-
-            async {
-                create(email,password)
+        lifecycleScope.launch(Dispatchers.Main){
+            val createJob = async {
+                try {
+                    Log.d(TAG,"BEFORE")
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+                    if(firebaseAuth.currentUser != null) {
+                        Toast.makeText(this@SignUpActivity,"SignUp Successful.",Toast.LENGTH_SHORT).show()
+                        isOk = true;
+                        userUID = firebaseAuth.currentUser!!.uid
+                    }
+                    else {
+                        Log.d(TAG,"Sign Up Not Successful.")
+                        Toast.makeText(this@SignUpActivity,"SignUp Not Successful.",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                catch (e: Exception) {
+                    Log.d(TAG,"$e")
+                }
             }.await()
+
             Log.d(TAG,"The isOk is $isOk")
             if(isOk){
                 async {
@@ -118,31 +121,15 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
             binding.pbSignup.visibility = View.GONE
 
         }
-    }
 
-    suspend fun create(email: String,password: String) {
-        Log.d(TAG,"BEFORE")
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(parent) {task ->
-            if(task.isSuccessful) {
-                Toast.makeText(this@SignUpActivity,"SignUp Successful.",Toast.LENGTH_SHORT).show()
-                isOk = true;
-                userUID = firebaseAuth.currentUser!!.uid
-                Log.d(TAG,"INSIDE")
-                return@addOnCompleteListener
-            }
-            else {
-                Log.d(TAG,"${task.exception} . ")
-                Toast.makeText(this@SignUpActivity,"SignUp Not Successful.",Toast.LENGTH_SHORT).show()
-            }
-        }
-        Log.d(TAG,"AFTER")
     }
 
     suspend fun uploadDataToRealtimeDatabase(UID:String,userEmail: String,userName : String,url:String) {
-        Log.d(TAG,"in upload data")
+        Log.d(TAG,"in upload Data")
         val ref = FirebaseDatabase.getInstance("https://firechat-931d2-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("/users/$UID")
         val userinfo = UserInfo(userEmail,UID,userName,url)
@@ -150,10 +137,18 @@ class SignUpActivity : AppCompatActivity() {
             Log.d(TAG,"UPLOADED USER INFORMATION")
         }.addOnFailureListener{
             Log.d(TAG,"${it.message} $it")
-        }
+        }.await()
+        Log.d(TAG,"DONE 1")
     }
 
     suspend fun uploadImage() : String  {
+        if(selectedPhoto == null) {
+            selectedPhoto = Uri.parse(
+                ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                        + applicationContext.getResources().getResourcePackageName(R.drawable.profilepicnormall) + '/'
+                        + applicationContext.getResources().getResourceTypeName(R.drawable.profilepicnormall) + '/'
+                        + applicationContext.getResources().getResourceEntryName(R.drawable.profilepicnormall) )
+        }
         Log.d(TAG,"in upload Image")
         val profilePicName = "${firebaseAuth.uid}.profileImage"
         var url = "."
@@ -161,13 +156,16 @@ class SignUpActivity : AppCompatActivity() {
         storage_reference.putFile(selectedPhoto!!).continueWithTask { task ->
             if (!task.isSuccessful) {
                 Log.d(TAG,"${task.exception}")
+                Log.d(TAG,"UPLOADED USER IMAGE")
             }
             storage_reference.downloadUrl.addOnSuccessListener {
                 url = it.toString()
             }.addOnFailureListener{
                 Log.d(TAG,"$it ${it.message}")
             }
-        }
+        }.await()
+
+        Log.d(TAG,"DONE 2")
 
         if(url.length < 2) {
             Log.d(TAG,"Going with default url.")

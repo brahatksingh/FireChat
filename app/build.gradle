@@ -77,4 +77,6 @@ dependencies {
     // 3rd party Libraries
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2"
+
 }
