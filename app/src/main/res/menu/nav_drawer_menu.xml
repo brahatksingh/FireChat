@@ -10,7 +10,7 @@
         />
 
     <item
-        android:id="@+id/menu_item_navDrawer_newMessage"
+        android:id="@+id/newMessageFragment"
         android:title="New Message"
         android:icon="@drawable/ic_baseline_textsms_24"
         app:showAsAction="ifRoom"/>

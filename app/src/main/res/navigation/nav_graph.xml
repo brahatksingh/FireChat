@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label="FireChat"
+    app:startDestination="@id/recentChatsFragment">
+
+    <fragment
+        android:id="@+id/newMessageFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.NewMessageFragment"
+        android:label="fragment_new_message"
+        tools:layout="@layout/fragment_new_message">
+        <action
+            android:id="@+id/action_newMessageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_chatFragment_to_recentChatsFragment"
+            app:destination="@id/recentChatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentChatsFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.RecentChatsFragment"
+        android:label="FireChat"
+
+        tools:layout="@layout/fragment_recent_chats">
+        <action
+            android:id="@+id/action_recentChatsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+
+    </fragment>
+    <action
+        android:id="@+id/action_global_newMessageFragment"
+        app:destination="@id/newMessageFragment" />
+</navigation>
