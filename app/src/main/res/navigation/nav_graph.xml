@@ -8,12 +8,15 @@
 
     <fragment
         android:id="@+id/newMessageFragment"
-        android:name="com.brahatksingh.firechatapp.UI.Fragments.NewMessageFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.NewMessage.NewMessageFragment"
         android:label="fragment_new_message"
         tools:layout="@layout/fragment_new_message">
         <action
             android:id="@+id/action_newMessageFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <argument
+            android:name="args_userUID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
