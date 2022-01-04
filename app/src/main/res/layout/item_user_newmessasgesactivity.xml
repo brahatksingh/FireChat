@@ -8,34 +8,34 @@
     android:layout_height="100dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/item_rvnma_image"
+        android:id="@+id/item_rvnmf_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@drawable/profilepicnormall"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/item_rvnma_username"
+        app:layout_constraintEnd_toStartOf="@+id/item_rvnmf_username"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_rvnma_username"
+        android:id="@+id/item_rvnmf_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="USERNAME"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/item_rvnma_email"
-        app:layout_constraintStart_toEndOf="@+id/item_rvnma_image"
+        app:layout_constraintBottom_toTopOf="@+id/item_rvnmf_email"
+        app:layout_constraintStart_toEndOf="@+id/item_rvnmf_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_rvnma_email"
+        android:id="@+id/item_rvnmf_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="USER EMAIL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/item_rvnma_username"
-        app:layout_constraintTop_toBottomOf="@+id/item_rvnma_username" />
+        app:layout_constraintStart_toStartOf="@+id/item_rvnmf_username"
+        app:layout_constraintTop_toBottomOf="@+id/item_rvnmf_username" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,19 +7,28 @@
     tools:context=".UI.Fragments.NewMessage.NewMessageFragment">
 
     <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/pb_nma"
+        android:id="@+id/pb_nmf"
         style="@style/SpinKitView.Small.FoldingCube"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         app:SpinKit_Color="@color/AppLightBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_newMessageActivity"
+        android:id="@+id/rv_newMessageFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
         tools:listitem="@layout/item_user_newmessasgesactivity" />
 
 </FrameLayout>

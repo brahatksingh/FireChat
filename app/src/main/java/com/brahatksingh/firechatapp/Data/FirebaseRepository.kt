@@ -11,15 +11,13 @@ import com.google.firebase.firestore.auth.User
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-class FirebaseRepository(val coroutine : CoroutineScope) {
+object FirebaseRepository {
 
     private val TAG = "FIREBASE REPOSITORY : "
-
     private val firebaseAuth:FirebaseAuth = FirebaseAuth.getInstance()
     private val firebaseDatabase :FirebaseDatabase = FirebaseDatabase.getInstance()
 
     suspend fun getAllUsers() : ArrayList<UserInfo> {
-        val ref = firebaseDatabase.getReference("/users")
         var userList = ArrayList<UserInfo>()
         Log.d(TAG,"BEFORE")
 
@@ -37,6 +35,7 @@ class FirebaseRepository(val coroutine : CoroutineScope) {
                 userList = tempList
             }
         }.await()
+
         Log.d(TAG,"AFTER")
         return userList
     }

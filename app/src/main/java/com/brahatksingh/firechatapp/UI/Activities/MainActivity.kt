@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var firebaseAuth : FirebaseAuth
     lateinit var navController: NavController
     lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var repository : Repository
+    lateinit var firebaseSRC : FirebaseRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +47,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainactivityNavigationView.setupWithNavController(navController)
 
-        val firebaseSRC = FirebaseRepository(lifecycleScope)
-        val repository = Repository(firebaseSRC)
+        firebaseSRC = FirebaseRepository
+        repository = Repository
         lifecycleScope.launch {
             val userList = repository.getAllUsersFromFirebase()
             Log.d("SIUFFVFFFF","$userList")
-            Toast.makeText(applicationContext,"$userList",Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,"${userList.size}",Toast.LENGTH_SHORT).show()
         }
     }
 

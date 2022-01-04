@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/newMessageFragment"
         android:name="com.brahatksingh.firechatapp.UI.Fragments.NewMessage.NewMessageFragment"
-        android:label="fragment_new_message"
+        android:label="New Message"
         tools:layout="@layout/fragment_new_message">
         <action
             android:id="@+id/action_newMessageFragment_to_chatFragment"
@@ -21,11 +21,20 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.brahatksingh.firechatapp.UI.Fragments.ChatFragment"
-        android:label="fragment_chat"
+        android:label="Chat Fragment"
         tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/action_chatFragment_to_recentChatsFragment"
             app:destination="@id/recentChatsFragment" />
+        <argument
+            android:name="sp_name"
+            app:argType="string" />
+        <argument
+            android:name="sp_picurl"
+            app:argType="string" />
+        <argument
+            android:name="sp_uid"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/recentChatsFragment"
@@ -40,5 +49,7 @@
     </fragment>
     <action
         android:id="@+id/action_global_newMessageFragment"
-        app:destination="@id/newMessageFragment" />
+        app:destination="@id/newMessageFragment"
+        app:popUpTo="@id/recentChatsFragment"
+        app:popUpToInclusive="true" />
 </navigation>
