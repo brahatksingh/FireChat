@@ -26,14 +26,9 @@ class ChatFragmentViewModel() : ViewModel() {
         _list.value = Repository.getAllChatMessagesFromFirebase(uid,sp_uid)
     }
 
-    suspend fun attachListenerForNewMessages() {
-        Repository.attachListenerForNewMessage(_list)
-    }
-
     suspend fun attachListener(uid :String,sp_uid: String) {
         Log.d("CHAT FIREBASE REPOSITORY","IN FUNCTION")
         val ref = FirebaseDatabase.getInstance().reference.child("messages").child(uid).child(sp_uid)
-
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val newMessage = snapshot.getValue(ChatMessage::class.java)
