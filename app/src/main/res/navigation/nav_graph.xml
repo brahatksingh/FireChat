@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.brahatksingh.firechatapp.UI.Fragments.Chat.ChatFragment"
-        android:label="Chat Fragment"
+        android:label="A."
         tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/action_chatFragment_to_recentChatsFragment"

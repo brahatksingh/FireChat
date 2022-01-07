@@ -12,7 +12,7 @@ import kotlinx.coroutines.tasks.await
 
 object FirebaseRepository {
 
-    private val TAG = "FIREBASE REPOSITORY : "
+    private val TAG = "FIREBASE REPOSITORY FR"
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
 
@@ -53,6 +53,7 @@ object FirebaseRepository {
 
     suspend fun sendMessage(message: String,uid : String,sp_uid : String) {
         val messageObj = ChatMessage(uid,sp_uid,message,"0","${System.currentTimeMillis() /1000}",".")
+
         var ref = firebaseDatabase.reference.child("messages").child(uid).child(sp_uid).push()
 
         ref.setValue(messageObj).addOnSuccessListener {

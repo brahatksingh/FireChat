@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatMessagesAdapter(val context : Context, val userID : String, var messageList : ArrayList<ChatMessage>) : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessagesViewHolder>() {
+class ChatMessagesAdapter(val context : Context, val userID : String, var messageList : ArrayList<ChatMessage>?) : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessagesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessagesViewHolder {
         when(viewType) {
@@ -43,39 +43,45 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
     override fun onBindViewHolder(holder: ChatMessagesViewHolder, position: Int) {
         when(getItemViewType(position)) {
             1 ->{
-                Glide.with(context).load(messageList[position].imageUrl).into(holder.image_fromUser).onLoadFailed(
+                Glide.with(context).load(messageList!![position].imageUrl).into(holder.image_fromUser).onLoadFailed(
                     ContextCompat.getDrawable(context,R.drawable.defaultimageforchat))
             }
             2-> {
-                holder.messageText_fromUser.text = messageList[position].messageText
+                holder.messageText_fromUser.text = messageList!![position].messageText
             }
             3->{
-                Glide.with(context).load(messageList[position].imageUrl).into(holder.image_forUser).onLoadFailed(
+                Glide.with(context).load(messageList!![position].imageUrl).into(holder.image_forUser).onLoadFailed(
                     ContextCompat.getDrawable(context,R.drawable.defaultimageforchat))
             }
             else ->{
-                holder.messageText_forUser.text = messageList[position].messageText
+                holder.messageText_forUser.text = messageList!![position].messageText
             }
         }
-        holder.itemView.setOnLongClickListener(object : View.OnLongClickListener{
-            override fun onLongClick(p0: View?): Boolean {
-                if(p0 == null){
-                    return false
-                }
-                val builder = AlertDialog.Builder(p0.context)
-                builder.setPositiveButton("Okay") { _,_ ->
-
-                }
-                builder.setTitle("Message Created")
-                builder.setMessage(SimpleDateFormat("MM/dd/yyyy").format(Date(messageList[position].timeStamp)))
-                builder.create().show()
-                return true
-            }
-        })
+//        holder.itemView.setOnLongClickListener(object : View.OnLongClickListener{
+//            override fun onLongClick(p0: View?): Boolean {
+//                if(messageList == null) {
+//                    return false
+//                }
+//                if(p0 == null){
+//                    return false
+//                }
+//                else {
+//
+//                }
+//                val builder = AlertDialog.Builder(p0.context)
+//                builder.setPositiveButton("Okay") { _,_ ->
+//
+//                }
+//                builder.setTitle("Message Created")
+//                builder.setMessage(SimpleDateFormat("MM/dd/yyyy").format(Date(messageList!![position].timeStamp)))
+//                builder.create().show()
+//                return true
+//            }
+//        })
     }
 
     override fun getItemCount(): Int {
-        return messageList.size
+        return messageList!!.size
     }
 
     inner class ChatMessagesViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -86,15 +92,15 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(messageList[position].fromUID) {
+        return when(messageList!![position].fromUID) {
             userID -> {
-                if(messageList[position].isImage.equals("1")) {
+                if(messageList!![position].image.equals("1")) {
                     return 1
                 }
                 return 2
             }
             else -> {
-                if(messageList[position].isImage.equals("1")) {
+                if(messageList!![position].image.equals("1")) {
                     return 3
                 }
                 return 4
@@ -103,10 +109,10 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
     }
 
     fun getLastPosition() : Int {
-        return if (messageList.isEmpty()) 0 else messageList.size - 1
+        return if (messageList!!.isEmpty()) 0 else messageList!!.size - 1
     }
 
-    fun updateData(list : ArrayList<ChatMessage>) {
+    fun updateData(list : ArrayList<ChatMessage>?) {
         messageList = list
         notifyDataSetChanged()
     }

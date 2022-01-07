@@ -17,6 +17,9 @@ class ChatFragmentViewModel() : ViewModel() {
     private val _list = MutableLiveData<ArrayList<ChatMessage>>()
     val list : LiveData<ArrayList<ChatMessage>>
     get() = _list
+    private val _flag = MutableLiveData<Boolean>(true)
+    val flag : LiveData<Boolean>
+    get() = _flag
 
     init {
         _list.value = ArrayList<ChatMessage>()
@@ -32,9 +35,18 @@ class ChatFragmentViewModel() : ViewModel() {
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val newMessage = snapshot.getValue(ChatMessage::class.java)
-                Log.d("CHAT FIREBASE REPOSITORY","$newMessage")
                 if(newMessage != null) {
-                    _list.value!!.add(newMessage)
+                    Log.d("CHAT VIEW MODEL","The new message $newMessage")
+                    if(_list.value != null) {
+                        Log.d("CHAT VIEW MODEL","ADDING TO LIST $newMessage")
+                        _list.value!!.add(newMessage)
+                        if(_flag.value != null) {
+                            _flag.value = _flag.value?.not()
+                        }
+                    }
+                    else {
+                        Log.d("CHAT VIEW MODEL","ADDING LIST PROBLEM")
+                    }
                 }
             }
 
