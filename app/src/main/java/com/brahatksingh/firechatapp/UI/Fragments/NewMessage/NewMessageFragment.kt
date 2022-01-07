@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.GeneratedAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,7 @@ class NewMessageFragment : Fragment() {
         viewModelFactory = NewMessageViewModelFactory(firebaseAuth.currentUser!!.uid)
         viewModel = ViewModelProvider(this,viewModelFactory).get(NewMessageViewModel::class.java)
 
+
         // Set Observers Here if needed
         return binding.root
     }
@@ -59,4 +61,5 @@ class NewMessageFragment : Fragment() {
         }
 
     }
+
 }

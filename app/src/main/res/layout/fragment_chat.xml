@@ -1,15 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.Activities.MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/oiehgf"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="DEFAULT TEXT" />
+        android:scaleType="fitXY"
+        android:src="@drawable/chat_background_wallpaper"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/ca_etv_newmessage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/drawable_for_etv"
+        android:ems="10"
+        android:gravity="top|start"
+        android:hint="New Message"
+        android:inputType="textMultiLine"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/ca_btn_send"
+        app:layout_constraintEnd_toStartOf="@+id/ca_btn_send"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ca_btn_send" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ca_btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:padding="8dp"
+        android:text=">"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ca_etv_newmessage"
+        app:layout_constraintTop_toBottomOf="@id/ca_rv_messages"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ca_rv_messages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/ca_btn_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_message_foruser" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

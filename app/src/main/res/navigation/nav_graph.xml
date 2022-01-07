@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.brahatksingh.firechatapp.UI.Fragments.ChatFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.Chat.ChatFragment"
         android:label="Chat Fragment"
         tools:layout="@layout/fragment_chat">
         <action
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/recentChatsFragment"
-        android:name="com.brahatksingh.firechatapp.UI.Fragments.RecentChatsFragment"
+        android:name="com.brahatksingh.firechatapp.UI.Fragments.RecentChats.RecentChatsFragment"
         android:label="FireChat"
 
         tools:layout="@layout/fragment_recent_chats">

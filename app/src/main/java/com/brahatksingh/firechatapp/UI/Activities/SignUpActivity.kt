@@ -33,7 +33,7 @@ class SignUpActivity : AppCompatActivity() {
     var selectedPhoto : Uri? = null
     var IMAGE_RESPONE_CODE = 1
     var isOk = false
-    val imageUrl : String = "."
+    var imageUrl : String = "."
     var userUID = "."
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +82,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.signupImgvPhoto.setImageURI(selectedPhoto)
             }
         }
+
     }
 
     private fun createAccount(email : String, password : String,name:String) {
@@ -106,14 +107,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }.await()
 
-            Log.d(TAG,"The isOk is $isOk")
             if(isOk){
                 async {
-                    Log.d(TAG,"in 1 async")
-                    uploadImage()
+                    imageUrl = uploadImage()
                 }.await()
                 async {
-                    Log.d(TAG,"in 2 async")
                     uploadDataToRealtimeDatabase(userUID,email,name,imageUrl)
                 }.await()
                 binding.pbSignup.visibility = View.GONE
@@ -129,16 +127,16 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     suspend fun uploadDataToRealtimeDatabase(UID:String,userEmail: String,userName : String,url:String) {
-        Log.d(TAG,"in upload Data")
+
         val ref = FirebaseDatabase.getInstance("https://firechat-931d2-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("/users/$UID")
         val userinfo = UserInfo(userEmail,UID,userName,url)
         ref.setValue(userinfo).addOnSuccessListener {
-            Log.d(TAG,"UPLOADED USER INFORMATION")
+
         }.addOnFailureListener{
             Log.d(TAG,"${it.message} $it")
         }.await()
-        Log.d(TAG,"DONE 1")
+
     }
 
     suspend fun uploadImage() : String  {
@@ -149,14 +147,13 @@ class SignUpActivity : AppCompatActivity() {
                         + applicationContext.getResources().getResourceTypeName(R.drawable.profilepicnormall) + '/'
                         + applicationContext.getResources().getResourceEntryName(R.drawable.profilepicnormall) )
         }
-        Log.d(TAG,"in upload Image")
+
         val profilePicName = "${firebaseAuth.uid}.profileImage"
         var url = "."
-        val storage_reference = FirebaseStorage.getInstance("gs://firechat-931d2.appspot.com").getReference("/ProfileImages/$profilePicName")
+        val storage_reference = FirebaseStorage.getInstance().getReference("/ProfileImages/$profilePicName")
         storage_reference.putFile(selectedPhoto!!).continueWithTask { task ->
             if (!task.isSuccessful) {
                 Log.d(TAG,"${task.exception}")
-                Log.d(TAG,"UPLOADED USER IMAGE")
             }
             storage_reference.downloadUrl.addOnSuccessListener {
                 url = it.toString()
@@ -164,15 +161,9 @@ class SignUpActivity : AppCompatActivity() {
                 Log.d(TAG,"$it ${it.message}")
             }
         }.await()
-
-        Log.d(TAG,"DONE 2")
-
         if(url.length < 2) {
-            Log.d(TAG,"Going with default url.")
             url = "https://firebasestorage.googleapis.com/v0/b/firechat-931d2.appspot.com/o/ProfileImages%2FsqE6s03wgXQm7gl03xxQIM3JVQc2.profileImage?alt=media&token=640266a5-6611-4e09-b8ed-72ba8bdfdc1f"
-
         }
-        Log.d(TAG,"returning the img url $url")
         return url
     }
 

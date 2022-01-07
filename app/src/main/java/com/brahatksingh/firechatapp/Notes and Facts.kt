@@ -6,10 +6,8 @@ fun main() {
     // Implemented the Action bar and Drawer Layout.
     // Hamburger icon is not showing on the home Page.
 
-    // Implement Signout in drawer layout.
-    // Implement the rest of the New Message Fragment. Test both the repository.
-
-    // Initialize the viewModel
+    // Implement Sign out in drawer layout.
+    // Implement Chat Fragment.
 
     // Override ViewModelProvider.NewInstanceFactory to create the ViewModel (VM).
 class SomeViewModelFactory(private val someString: String): ViewModelProvider.NewInstanceFactory() {
