@@ -57,27 +57,6 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
                 holder.messageText_forUser.text = messageList!![position].messageText
             }
         }
-//        holder.itemView.setOnLongClickListener(object : View.OnLongClickListener{
-//            override fun onLongClick(p0: View?): Boolean {
-//                if(messageList == null) {
-//                    return false
-//                }
-//                if(p0 == null){
-//                    return false
-//                }
-//                else {
-//
-//                }
-//                val builder = AlertDialog.Builder(p0.context)
-//                builder.setPositiveButton("Okay") { _,_ ->
-//
-//                }
-//                builder.setTitle("Message Created")
-//                builder.setMessage(SimpleDateFormat("MM/dd/yyyy").format(Date(messageList!![position].timeStamp)))
-//                builder.create().show()
-//                return true
-//            }
-//        })
     }
 
     override fun getItemCount(): Int {
@@ -115,6 +94,15 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
     fun updateData(list : ArrayList<ChatMessage>?) {
         messageList = list
         notifyDataSetChanged()
+    }
+
+    fun getLastMessage() : String {
+        return if(messageList!!.isEmpty()) {
+            return "DEF VALUE AS SIZE IS INVALID"
+        }
+        else {
+            return messageList!![getLastPosition()].messageText
+        }
     }
 
 }

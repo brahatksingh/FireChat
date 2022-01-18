@@ -1,14 +1,11 @@
 package com.brahatksingh.firechatapp.Adapters
 
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +31,7 @@ class NewMessageAdapter(val navController: NavController) : RecyclerView.Adapter
         Glide.with(holder.entireLayout.context).load(data[position].profilePicUrl).into(holder.userImage).onLoadFailed(ContextCompat.getDrawable(holder.entireLayout.context,R.drawable.profilepicnormall))
         holder.entireLayout.setOnClickListener {
             val action = NewMessageFragmentDirections
-                .actionNewMessageFragmentToChatFragment(data[position].name,data[position].profilePicUrl,data[position].userId)
+                .actionNewMessageFragmentToChatFragment(data[position].name,data[position].profilePicUrl,data[position].userId,-1)
             navController.navigate(action)
             Log.d("NewMessagesActivity","${data[position].toString()}")
         }
@@ -50,9 +47,9 @@ class NewMessageAdapter(val navController: NavController) : RecyclerView.Adapter
     }
 
     inner class NewMessageViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val username = itemView.findViewById<TextView>(R.id.item_rvnmf_username)
-        val useremail = itemView.findViewById<TextView>(R.id.item_rvnmf_email)
-        val userImage = itemView.findViewById<ImageView>(R.id.item_rvnmf_image)
+        val username = itemView.findViewById<TextView>(R.id.item_rvrcf_username)
+        val useremail = itemView.findViewById<TextView>(R.id.item_rvrcf_message)
+        val userImage = itemView.findViewById<ImageView>(R.id.item_rvrcf_image)
         val entireLayout = itemView
     }
 

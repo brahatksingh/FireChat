@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.brahatksingh.firechatapp.Data.ChatDatabase
 import com.brahatksingh.firechatapp.Data.FirebaseRepository
 import com.brahatksingh.firechatapp.Data.Repository
 import com.brahatksingh.firechatapp.NavGraphDirections
@@ -49,11 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         firebaseSRC = FirebaseRepository
         repository = Repository
-        lifecycleScope.launch {
-            val userList = repository.getAllUsersFromFirebase()
-            Log.d("SIUFFVFFFF","$userList")
-            Toast.makeText(applicationContext,"${userList.size}",Toast.LENGTH_SHORT).show()
-        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

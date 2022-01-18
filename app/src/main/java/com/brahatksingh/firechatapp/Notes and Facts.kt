@@ -7,9 +7,10 @@ fun main() {
     // Hamburger icon is not showing on the home Page.
 
     // Implement Sign out in drawer layout.
-    // Implement Chat Fragment.
+    // Implement set entire RV for the RecentChat factory and Integrate it with Repository
 
     // Override ViewModelProvider.NewInstanceFactory to create the ViewModel (VM).
+
 class SomeViewModelFactory(private val someString: String): ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = SomeViewModel(someString) as T
 }
@@ -28,6 +29,4 @@ class Fragment: Fragment() {
       //
 
      */
-
-
 }

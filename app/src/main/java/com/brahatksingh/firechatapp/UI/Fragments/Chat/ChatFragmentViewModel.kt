@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brahatksingh.firechatapp.Data.FirebaseRepository
 import com.brahatksingh.firechatapp.Data.Models.ChatMessage
+import com.brahatksingh.firechatapp.Data.Models.RecentChatData
 import com.brahatksingh.firechatapp.Data.Repository
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 class ChatFragmentViewModel() : ViewModel() {
 
@@ -20,6 +23,8 @@ class ChatFragmentViewModel() : ViewModel() {
     private val _flag = MutableLiveData<Boolean>(true)
     val flag : LiveData<Boolean>
     get() = _flag
+    private val TAG = "CHAT VIEW MODEL"
+
 
     init {
         _list.value = ArrayList<ChatMessage>()
@@ -30,22 +35,22 @@ class ChatFragmentViewModel() : ViewModel() {
     }
 
     suspend fun attachListener(uid :String,sp_uid: String) {
-        Log.d("CHAT FIREBASE REPOSITORY","IN FUNCTION")
+        Log.d(TAG,"ATTACH LISTENER FUNCTION")
         val ref = FirebaseDatabase.getInstance().reference.child("messages").child(uid).child(sp_uid)
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val newMessage = snapshot.getValue(ChatMessage::class.java)
                 if(newMessage != null) {
-                    Log.d("CHAT VIEW MODEL","The new message $newMessage")
+                    Log.d(TAG,"The new message $newMessage")
                     if(_list.value != null) {
-                        Log.d("CHAT VIEW MODEL","ADDING TO LIST $newMessage")
+                        Log.d(TAG,"ADDING TO LIST $newMessage")
                         _list.value!!.add(newMessage)
                         if(_flag.value != null) {
                             _flag.value = _flag.value?.not()
                         }
                     }
                     else {
-                        Log.d("CHAT VIEW MODEL","ADDING LIST PROBLEM")
+                        Log.d(TAG,"ADDING LIST PROBLEM")
                     }
                 }
             }
@@ -71,5 +76,39 @@ class ChatFragmentViewModel() : ViewModel() {
 
     suspend fun sendMessage(message : String , uid : String, sp_uid: String) {
         Repository.sendMessageFromFirebase(message,uid,sp_uid)
+    }
+
+    suspend fun updateLastMessageInDB(id : Long,message : String = "DEFVAL") {
+        // All details are of the second user.
+        Log.d(TAG,"UPDATING $id USER WITH $message")
+        Repository.updateDBwithID(id,message)
+    }
+
+    suspend fun insertNewMessageInDB(name : String,picURL : String,uid : String,message : String = "DEF String") : Long {
+        Log.d(TAG,"CREATING NEW USER")
+        return Repository.insertDatainDB(RecentChatData(0,name,message,uid,picURL))
+    }
+
+    suspend fun findUserInDB(name : String,picURL : String,uid : String, message : String = "DEF String") {
+        val DB_ID : Long = if(Repository.searchUserInDB(uid) == null) {
+            -1
+        }
+        else {
+            Repository.searchUserInDB(uid)
+        }
+        runBlocking(Dispatchers.IO) {
+            Log.d(TAG,"THE GOT DB ID IS $DB_ID")
+            if(DB_ID < 0) {
+                insertNewMessageInDB(name,picURL,uid,message)
+            }
+            else {
+                updateLastMessageInDB(DB_ID,message)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG,"VIEW MODEL DESTROYED")
     }
 }

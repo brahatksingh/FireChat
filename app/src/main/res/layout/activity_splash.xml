@@ -12,11 +12,24 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/iconbig"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView_morenifo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_morenifo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created by Brahat K Singh.\nAll Rights Reserved.\nThis is a github demo copy.\nNo Distribution allowed."
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_from"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView_from"
@@ -43,4 +56,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

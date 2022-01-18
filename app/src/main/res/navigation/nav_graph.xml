@@ -35,6 +35,10 @@
         <argument
             android:name="sp_uid"
             app:argType="string" />
+        <argument
+            android:name="sp_id_in_db"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/recentChatsFragment"

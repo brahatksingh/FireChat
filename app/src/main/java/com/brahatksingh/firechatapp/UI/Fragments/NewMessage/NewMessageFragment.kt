@@ -45,14 +45,10 @@ class NewMessageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG,"BEFORE ASYNC 1")
         lifecycleScope.launch {
-            Log.d(TAG,"BEFORE ASYNC 2 ${viewModel.list}")
             async {
                 viewModel.getAllUser()
             }.await()
-            Log.d(TAG,"AFTER ASYNC 1 ${viewModel.list}")
-            Log.d(TAG,"AFTER ASYNC 2")
             binding.pbNmf.visibility = View.GONE
             adapter = NewMessageAdapter(findNavController())
             adapter.updateList(viewModel.list.value ?: ArrayList<UserInfo>())

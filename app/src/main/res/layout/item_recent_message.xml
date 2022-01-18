@@ -2,15 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="4dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="80dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/item_rvrcf_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/profilepicnormall"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="12dp"
@@ -33,7 +32,7 @@
         android:id="@+id/item_rvrcf_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USER EMAIL"
+        android:text="LAST MESSAGE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/item_rvrcf_username"
         app:layout_constraintTop_toBottomOf="@+id/item_rvrcf_username" />
