@@ -26,7 +26,7 @@ class NewMessageFragment : Fragment() {
     private lateinit var binding: FragmentNewMessageBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var adapter: NewMessageAdapter
-    private val TAG = "NEW MESSAGE FRAGMENT ::"
+    private val TAG = "NEW MESSAGE FRAGMENT "
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,8 +37,6 @@ class NewMessageFragment : Fragment() {
         viewModelFactory = NewMessageViewModelFactory(firebaseAuth.currentUser!!.uid)
         viewModel = ViewModelProvider(this,viewModelFactory).get(NewMessageViewModel::class.java)
 
-
-        // Set Observers Here if needed
         return binding.root
     }
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.brahatksingh.firechatapp.Data.Models.ChatMessage
 import com.brahatksingh.firechatapp.Data.Models.RecentChatData
 import com.brahatksingh.firechatapp.Data.Models.UserInfo
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.async
 
 object Repository {
@@ -56,6 +57,17 @@ object Repository {
     suspend fun searchUserInDB(gotUID : String) : Long {
         Log.d(TAG,"SEARCHING $gotUID")
         return chatDao.searchWithUID(gotUID)
+    }
+
+    suspend fun getUserInfoFromFirebase(uid: String?) : Any {
+        if(uid == null) {
+            return "-1"
+        }
+        return FirebaseRepository.getUserInfo(uid)
+    }
+
+    suspend fun deleteAllDataInDB() {
+        chatDao.deleteAll()
     }
 
 }

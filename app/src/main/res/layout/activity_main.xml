@@ -6,6 +6,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
     tools:context=".UI.Activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +33,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/profilepicnormall"
                 android:visibility="gone"/>
+
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView

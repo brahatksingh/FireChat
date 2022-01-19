@@ -71,4 +71,15 @@ object FirebaseRepository {
         }.await()
 
     }
+
+    suspend fun getUserInfo(uid: String) : UserInfo {
+        var userInfo = UserInfo()
+        val ref = firebaseDatabase.reference.child("users").child(uid)
+        ref.get().addOnCompleteListener{ snapshot ->
+            val temp = snapshot.to(UserInfo::class.java)
+            userInfo = temp.second.newInstance()
+
+        }.await()
+        return userInfo
+    }
 }

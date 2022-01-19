@@ -54,7 +54,6 @@ class ChatFragment : Fragment() {
             }
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel.sendMessage(message,firebaseAuth.currentUser!!.uid,args.spUid)
-
 //                viewModel.updateLastMessage(args.spIdInDb,message,args.spName,args.spPicurl,args.spUid)
             }
         }

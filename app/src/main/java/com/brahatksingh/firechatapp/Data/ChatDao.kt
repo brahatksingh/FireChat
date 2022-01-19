@@ -25,4 +25,7 @@ interface ChatDao {
     @Query("SELECT id FROM chat_table WHERE sp_uid = :gotUID ")
     suspend fun searchWithUID(gotUID : String) : Long
 
+    @Query("DELETE FROM chat_table")
+    suspend fun deleteAll()
+
 }

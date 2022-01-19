@@ -1,12 +1,13 @@
 package com.brahatksingh.firechatapp
 
 fun main() {
+
     /*
 
     // Final to-dos
     // Implement Image Sending
-    // Fix not showing of Hamburger Icon
-    // Implement the signout button in Drawer layout and make it to drop table when a user signs out
+    // Fix not showing of Hamburger Icon -CLOSED
+    // Implement the signout button in Drawer layout and make it to drop table when a user signs out - CLOSED
     // Implement the upper part of drawer layout
     // Fix the yellow color at the top of the app - CLOSED
 
@@ -36,4 +37,5 @@ class Fragment: Fragment() {
       //
 
      */
+    
 }
