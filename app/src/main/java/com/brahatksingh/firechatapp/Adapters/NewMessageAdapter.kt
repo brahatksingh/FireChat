@@ -33,7 +33,6 @@ class NewMessageAdapter(val navController: NavController) : RecyclerView.Adapter
             val action = NewMessageFragmentDirections
                 .actionNewMessageFragmentToChatFragment(data[position].name,data[position].profilePicUrl,data[position].userId,-1)
             navController.navigate(action)
-            Log.d("NewMessagesActivity","${data[position].toString()}")
         }
     }
 

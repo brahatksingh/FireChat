@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="AppLightBlue">#29F4F4</color>
     <color name="AppLightYellow">#FAF472</color>
-    <color name="AppDarkYellow">#d5eb10</color>
+    <color name="AppDarkYellow">#D5EB10</color>
+    <color name="AppLighterYellow">#FFF59D</color>
 </resources>

@@ -8,10 +8,7 @@ import com.brahatksingh.firechatapp.Data.FirebaseRepository
 import com.brahatksingh.firechatapp.Data.Models.ChatMessage
 import com.brahatksingh.firechatapp.Data.Models.RecentChatData
 import com.brahatksingh.firechatapp.Data.Repository
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -24,6 +21,7 @@ class ChatFragmentViewModel() : ViewModel() {
     val flag : LiveData<Boolean>
     get() = _flag
     private val TAG = "CHAT VIEW MODEL"
+    private var firebaseRef : DatabaseReference? = null
 
 
     init {
@@ -36,6 +34,9 @@ class ChatFragmentViewModel() : ViewModel() {
 
     suspend fun attachListener(uid :String,sp_uid: String) {
         Log.d(TAG,"ATTACH LISTENER FUNCTION")
+        if(firebaseRef != null) {
+            return
+        }
         val ref = FirebaseDatabase.getInstance().reference.child("messages").child(uid).child(sp_uid)
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -72,6 +73,8 @@ class ChatFragmentViewModel() : ViewModel() {
             }
 
         })
+
+        firebaseRef = ref
     }
 
     suspend fun sendMessage(message : String , uid : String, sp_uid: String) {

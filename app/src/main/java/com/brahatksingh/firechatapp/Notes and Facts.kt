@@ -3,6 +3,13 @@ package com.brahatksingh.firechatapp
 fun main() {
     /*
 
+    // Final to-dos
+    // Implement Image Sending
+    // Fix not showing of Hamburger Icon
+    // Implement the signout button in Drawer layout and make it to drop table when a user signs out
+    // Implement the upper part of drawer layout
+    // Fix the yellow color at the top of the app - CLOSED
+
     // Implemented the Action bar and Drawer Layout.
     // Hamburger icon is not showing on the home Page.
 
@@ -17,7 +24,7 @@ class SomeViewModelFactory(private val someString: String): ViewModelProvider.Ne
 
 class SomeViewModel(private val someString: String) : ViewModel() {
     init {
-        //TODO: Use 'someString' to init process when VM is created. i.e. Get data request.
+        //Use 'someString' to init process when VM is created. i.e. Get data request.
     }
 }
 

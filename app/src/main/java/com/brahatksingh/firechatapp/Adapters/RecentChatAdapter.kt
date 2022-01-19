@@ -31,11 +31,10 @@ class RecentChatAdapter(val gotContext : Context,val navController: NavControlle
         holder.spname.setText(list!![position].sp_name)
         holder.splastmessage.setText(list!![position].message)
         Glide.with(gotContext).load(list!![position].sp_picURL).into(holder.spimv).onLoadFailed(ContextCompat.getDrawable(gotContext,R.drawable.profilepicnormall))
-//        holder.spname.setOnClickListener {
-//            val action = RecentChatsFragmentDirections.actionRecentChatsFragmentToChatFragment(list!![position].sp_name,list!![position].sp_picURL,list!![position].sp_uid,list!![position].id.toLong())
-//            navController.navigate(action)
-//            Log.d("RC Adpapter","${list!![position].toString()}")
-//        }
+        holder.entireLayout.setOnClickListener {
+            val action = RecentChatsFragmentDirections.actionRecentChatsFragmentToChatFragment(list!![position].sp_name,list!![position].sp_picURL,list!![position].sp_uid)
+            navController.navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,6 +50,7 @@ class RecentChatAdapter(val gotContext : Context,val navController: NavControlle
         val spimv = itemView.findViewById<ImageView>(R.id.item_rvrcf_image)
         val spname = itemView.findViewById<TextView>(R.id.item_rvrcf_username)
         val splastmessage = itemView.findViewById<TextView>(R.id.item_rvrcf_message)
+        val entireLayout = itemView
     }
 
 }
