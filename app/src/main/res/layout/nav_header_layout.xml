@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="240dp"
     android:background="@color/AppLightBlue"
+    android:orientation="vertical"
     android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/drawer_imv"
+        android:layout_width="60dp"
+        android:layout_marginTop="32dp"
+        android:layout_height="60dp"
+        android:src="@drawable/profilepicnormall"/>
 
     <TextView
         android:id="@+id/drawer_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="40dp"
         android:fontFamily="@font/roboto_medium"
+        android:padding="4dp"
+        android:text="NAME"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/drawer_email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/drawer_email"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Emailllll"
-        android:textSize="24dp"
         android:fontFamily="@font/roboto_medium"
-        android:textStyle="italic"
+        android:padding="4dp"
+        android:text="EMAIL"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/drawer_uid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drawer_name" />
+        android:textStyle="italic"/>
 
     <TextView
         android:id="@+id/drawer_uid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:padding="4dp"
         android:text="UID"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drawer_email" />
+        />
 
-    <ImageView
-        android:id="@+id/drawer_imv"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/profilepicnormall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

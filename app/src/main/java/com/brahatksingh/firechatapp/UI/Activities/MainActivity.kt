@@ -4,14 +4,17 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.TextValueSanitizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -58,11 +61,10 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         navController =navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph,binding.drawerLayout)
-
         binding.mainactivityNavigationView.setupWithNavController(navController)
         binding.mainactivityNavigationView.setNavigationItemSelectedListener(this)
         setupActionBarWithNavController(navController,appBarConfiguration)
-
+        setDrawerLayoutInfo()
     }
 
 
@@ -72,10 +74,13 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun setDrawerLayoutInfo() {
-        val dl_name = findViewById<TextView>(R.id.drawer_name)
-        val dl_email = findViewById<TextView>(R.id.drawer_email)
-        val dl_uid = findViewById<TextView>(R.id.drawer_uid)
-        val dl_imv = findViewById<ImageView>(R.id.drawer_imv)
+        binding.mainactivityNavigationView.removeHeaderView(binding.mainactivityNavigationView.getHeaderView(0))
+        val dl = binding.mainactivityNavigationView.inflateHeaderView(R.layout.nav_header_layout)
+        val dl_name = dl.findViewById<TextView>(R.id.drawer_name)
+        val dl_email = dl.findViewById<TextView>(R.id.drawer_email)
+        val dl_uid = dl.findViewById<TextView>(R.id.drawer_uid)
+        val dl_imv = dl.findViewById<ImageView>(R.id.drawer_imv)
+        //bindingdl.drawerName.text = "OE40912"
         lifecycleScope.launch(Dispatchers.Main) {
             var userInfo = UserInfo()
             val temp = Repository.getUserInfoFromFirebase(firebaseAuth.uid)
@@ -111,6 +116,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.newMessageFragment -> {
                 navController.navigate(NavGraphDirections.actionGlobalNewMessageFragment(firebaseAuth!!.uid ?: "oubfoioqihfnh0"))
+                binding.root.closeDrawer(GravityCompat.START)
             }
             else -> {
                 // Nothing

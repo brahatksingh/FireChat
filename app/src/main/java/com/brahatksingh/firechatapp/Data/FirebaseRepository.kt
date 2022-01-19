@@ -1,5 +1,6 @@
 package com.brahatksingh.firechatapp.Data
 
+import android.renderscript.Sampler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.brahatksingh.firechatapp.Data.Models.ChatMessage
@@ -73,13 +74,11 @@ object FirebaseRepository {
     }
 
     suspend fun getUserInfo(uid: String) : UserInfo {
-        var userInfo = UserInfo()
+        var userInfo: UserInfo? = UserInfo()
         val ref = firebaseDatabase.reference.child("users").child(uid)
-        ref.get().addOnCompleteListener{ snapshot ->
-            val temp = snapshot.to(UserInfo::class.java)
-            userInfo = temp.second.newInstance()
-
+        ref.get().addOnSuccessListener { snapshot->
+            userInfo = snapshot.getValue(UserInfo::class.java)
         }.await()
-        return userInfo
+        return userInfo ?: UserInfo()
     }
 }

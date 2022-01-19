@@ -5,10 +5,11 @@ fun main() {
     /*
 
     // Final to-dos
+
     // Implement Image Sending
     // Fix not showing of Hamburger Icon -CLOSED
-    // Implement the signout button in Drawer layout and make it to drop table when a user signs out - CLOSED
-    // Implement the upper part of drawer layout
+    // Implement the sign out button in Drawer layout and make it to drop table when a user signs out - CLOSED
+    // Implement the upper part of drawer layout 
     // Fix the yellow color at the top of the app - CLOSED
 
     // Implemented the Action bar and Drawer Layout.
