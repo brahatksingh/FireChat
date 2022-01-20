@@ -25,13 +25,14 @@ import com.brahatksingh.firechatapp.databinding.FragmentChatBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
 
     private lateinit var binding : FragmentChatBinding
     private val args : ChatFragmentArgs by navArgs()
-    private val repository = Repository
     private lateinit var spUserImageView : ImageView
     private lateinit var viewModel: ChatFragmentViewModel
     private lateinit var firebaseAuth : FirebaseAuth
@@ -49,6 +50,21 @@ class ChatFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         viewModel = ViewModelProvider(this).get(ChatFragmentViewModel::class.java)
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "${args.spName}"
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setImageOnToolbar()
+        settingViewModel()
+
+        binding.caBtnAddImage.setOnClickListener {
+            handleImageClick()
+        }
+
         binding.caBtnSend.setOnClickListener {
             val message = binding.caEtvNewmessage.text.toString()
             if(message.isEmpty()) {
@@ -57,13 +73,73 @@ class ChatFragment : Fragment() {
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel.sendMessage(message,firebaseAuth.currentUser!!.uid,args.spUid)
             }
+            binding.caEtvNewmessage.setText("")
         }
-        binding.caBtnAddImage.setOnClickListener {
-            handleImageClick()
-        }
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "${args.spName}"
 
-        return binding.root
+//        chatAdapter = ChatMessagesAdapter(requireContext(),firebaseAuth.currentUser!!.uid,viewModel.list.value)
+//        binding.caRvMessages.apply {
+//            adapter = chatAdapter
+//            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+//        }
+//        binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
+
+//        observeMessageList()
+//        checkDBID()
+
+    }
+
+    private fun checkDBID() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            delay(10000)
+            viewModel.siddb(args.spUid)
+        }
+    }
+
+    private fun settingViewModel() {
+//        lifecycleScope.launch(Dispatchers.Main) {
+////            async {
+////                //viewModel.getAllChatMessage(firebaseAuth.currentUser!!.uid,args.spUid)
+////            }.await()
+//            setRV()
+//        }
+
+        setRV()
+    }
+
+    private fun setRV() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            chatAdapter = ChatMessagesAdapter(requireContext(),firebaseAuth.currentUser!!.uid,viewModel.list.value)
+            binding.caRvMessages.apply {
+                adapter = chatAdapter
+                layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            }
+            binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
+            viewModel.attachListener(firebaseAuth.currentUser!!.uid,args.spUid)
+            observeMessageList()
+        }
+    }
+
+    private fun observeMessageList() {
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            delay(5000)
+            viewModel.flag.observe(viewLifecycleOwner, Observer {
+                chatAdapter.updateData(viewModel.list.value)
+                binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val lm = chatAdapter.getLastMessage()
+                    if(!lm.equals("DEF VALUE AS SIZE IS INVALID")) {
+                        viewModel.findUserInDB(args.spName,args.spPicurl,args.spUid,lm)
+                    }
+                }
+            })
+        }
+
+    }
+
+    private fun setImageOnToolbar() {
+        spUserImageView = requireActivity().findViewById(R.id.toobar_user_image)
+        Glide.with(requireContext()).load(args.spPicurl).into(spUserImageView)
     }
 
     private fun handleImageClick() {
@@ -84,50 +160,6 @@ class ChatFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setImageOnToolbar()
-        settingViewModel()
-
-        chatAdapter = ChatMessagesAdapter(requireContext(),firebaseAuth.currentUser!!.uid,viewModel.list.value)
-        binding.caRvMessages.apply {
-            adapter = chatAdapter
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        }
-        binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
-
-        observeMessageList()
-
-    }
-
-    private fun observeMessageList() {
-
-        viewModel.flag.observe(viewLifecycleOwner, Observer {
-            chatAdapter.updateData(viewModel.list.value)
-            binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
-            lifecycleScope.launch(Dispatchers.IO) {
-                val lm = chatAdapter.getLastMessage()
-                if(!lm.equals("DEF VALUE AS SIZE IS INVALID")) {
-                    viewModel.findUserInDB(args.spName,args.spPicurl,args.spUid,lm)
-                }
-            }
-        })
-
-    }
-
-    private fun settingViewModel() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Log.d(TAG,"${repository.getAllChatMessagesFromFirebase(firebaseAuth.currentUser!!.uid,args.spUid)}")
-            viewModel.attachListener(firebaseAuth.currentUser!!.uid,args.spUid)
-        }
-    }
-
-    private fun setImageOnToolbar() {
-        spUserImageView = requireActivity().findViewById(R.id.toobar_user_image)
-        Glide.with(requireContext()).load(args.spPicurl).into(spUserImageView)
     }
 
 }

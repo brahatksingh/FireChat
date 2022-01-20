@@ -80,12 +80,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val dl_email = dl.findViewById<TextView>(R.id.drawer_email)
         val dl_uid = dl.findViewById<TextView>(R.id.drawer_uid)
         val dl_imv = dl.findViewById<ImageView>(R.id.drawer_imv)
-        //bindingdl.drawerName.text = "OE40912"
+
         lifecycleScope.launch(Dispatchers.Main) {
             var userInfo = UserInfo()
             val temp = Repository.getUserInfoFromFirebase(firebaseAuth.uid)
             if(temp.equals("-1")) {
-                    // Return
+
             }
             else {
                 Log.d(TAG,"&&& $userInfo")

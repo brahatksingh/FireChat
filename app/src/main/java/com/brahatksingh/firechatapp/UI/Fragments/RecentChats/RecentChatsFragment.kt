@@ -45,11 +45,7 @@ class RecentChatsFragment : Fragment(R.layout.fragment_recent_chats) {
             val newDAO = ChatDatabase.getChatDatabase(requireContext()).getDAO()
             Repository.instantiateDAOofRepository(newDAO)
         }
-        binding.signoutFragment.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(requireContext(),LogInActivity::class.java))
-            requireActivity().finish()
-        }
+
         setRecyclerView()
         showDB()
         return binding.root
@@ -64,15 +60,22 @@ class RecentChatsFragment : Fragment(R.layout.fragment_recent_chats) {
 
     private fun setRecyclerView() {
         lifecycleScope.launch(Dispatchers.IO) {
-            adapter = RecentChatAdapter(requireContext(),findNavController())
-            binding.rvRcf.adapter = adapter
 
             val list = async {
                 Repository.getAllChatsFromDB().value
-            }
-            adapter.updateList(list.await())
+            }.await()
+            setAdapterAndLayoutManager(list)
+        }
+    }
+
+    private fun setAdapterAndLayoutManager(list : ArrayList<RecentChatData>?) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            adapter = RecentChatAdapter(requireContext(),findNavController())
+            adapter.updateList(list)
+            binding.rvRcf.adapter = adapter
             binding.rvRcf.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

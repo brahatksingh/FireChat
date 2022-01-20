@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.brahatksingh.firechatapp.Data.FirebaseRepository
 import com.brahatksingh.firechatapp.Data.Models.ChatMessage
 import com.brahatksingh.firechatapp.Data.Models.RecentChatData
 import com.brahatksingh.firechatapp.Data.Repository
 import com.google.firebase.database.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class ChatFragmentViewModel() : ViewModel() {
 
@@ -52,7 +52,7 @@ class ChatFragmentViewModel() : ViewModel() {
                         }
                     }
                     else {
-                        Log.d(TAG,"ADDING LIST PROBLEM")
+                        Log.d(TAG,"ADDING IN LIST PROBLEM")
                     }
                 }
             }
@@ -94,13 +94,16 @@ class ChatFragmentViewModel() : ViewModel() {
     }
 
     suspend fun findUserInDB(name : String,picURL : String,uid : String, message : String = "DEF String") {
-        val DB_ID : Long = if(Repository.searchUserInDB(uid) == null) {
-            -1
-        }
-        else {
-            Repository.searchUserInDB(uid)
-        }
-        runBlocking(Dispatchers.IO) {
+        GlobalScope.launch {
+            var DB_ID : Long = -1
+            async {
+                DB_ID = if(Repository.searchUserInDB(uid) == null) {
+                    -1
+                }
+                else {
+                    Repository.searchUserInDB(uid)
+                }
+            }.await()
             Log.d(TAG,"THE GOT DB ID IS $DB_ID")
             if(DB_ID < 0) {
                 insertNewMessageInDB(name,picURL,uid,message)
@@ -118,5 +121,9 @@ class ChatFragmentViewModel() : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG,"VIEW MODEL DESTROYED")
+    }
+
+    suspend fun siddb(uid:String) {
+        Log.d(TAG+"!!!!!!!","!!!!!!!!! ${Repository.searchUserInDB(uid)}")
     }
 }
