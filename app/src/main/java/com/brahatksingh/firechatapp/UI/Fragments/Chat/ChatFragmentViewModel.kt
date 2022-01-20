@@ -1,5 +1,6 @@
 package com.brahatksingh.firechatapp.UI.Fragments.Chat
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -108,6 +109,10 @@ class ChatFragmentViewModel() : ViewModel() {
                 updateLastMessageInDB(DB_ID,message)
             }
         }
+    }
+
+    suspend fun uploadImage(uri : Uri,uid: String,sp_uid: String) {
+        Repository.uploadImageInFirebaseStrorage(uri,uid,sp_uid)
     }
 
     override fun onCleared() {

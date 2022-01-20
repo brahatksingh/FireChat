@@ -41,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         binding.signupTvSelectPhoto.setOnClickListener {
-            val intent = Intent();
+            val intent = Intent()
             intent.type = "image/*"
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent,"Select Pic"),IMAGE_RESPONE_CODE)

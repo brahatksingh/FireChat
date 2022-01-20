@@ -1,6 +1,7 @@
 package com.brahatksingh.firechatapp.Data
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -68,6 +69,10 @@ object Repository {
 
     suspend fun deleteAllDataInDB() {
         chatDao.deleteAll()
+    }
+
+    suspend fun uploadImageInFirebaseStrorage(uri : Uri,uid: String,sp_uid: String) {
+        FirebaseRepository.uploadImage(uri,uid,sp_uid)
     }
 
 }

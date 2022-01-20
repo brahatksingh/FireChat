@@ -1,5 +1,6 @@
 package com.brahatksingh.firechatapp.UI.Fragments.Chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -35,8 +36,9 @@ class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatFragmentViewModel
     private lateinit var firebaseAuth : FirebaseAuth
     private lateinit var chatAdapter : ChatMessagesAdapter
+    var IMAGE_RESPONE_CODE = 1
     private val TAG = "CHAT MESSAGE FRAGMENT"
-    private var spID : Long = -1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,13 +56,34 @@ class ChatFragment : Fragment() {
             }
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel.sendMessage(message,firebaseAuth.currentUser!!.uid,args.spUid)
-//                viewModel.updateLastMessage(args.spIdInDb,message,args.spName,args.spPicurl,args.spUid)
             }
         }
-        spID = args.spIdInDb
+        binding.caBtnAddImage.setOnClickListener {
+            handleImageClick()
+        }
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "${args.spName}"
 
         return binding.root
+    }
+
+    private fun handleImageClick() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Pic"),IMAGE_RESPONE_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1) {
+            if(data != null) {
+                val selectedPhoto = data?.data
+                lifecycleScope.launch {
+                    viewModel.uploadImage(selectedPhoto!!,args.spUid,firebaseAuth.currentUser!!.uid)
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,10 +107,12 @@ class ChatFragment : Fragment() {
 
         viewModel.flag.observe(viewLifecycleOwner, Observer {
             chatAdapter.updateData(viewModel.list.value)
-            Log.d(TAG,"Observed that Flag was changed $spID")
             binding.caRvMessages.smoothScrollToPosition(chatAdapter.getLastPosition())
             lifecycleScope.launch(Dispatchers.IO) {
-                viewModel.findUserInDB(args.spName,args.spPicurl,args.spUid,chatAdapter.getLastMessage())
+                val lm = chatAdapter.getLastMessage()
+                if(!lm.equals("DEF VALUE AS SIZE IS INVALID")) {
+                    viewModel.findUserInDB(args.spName,args.spPicurl,args.spUid,lm)
+                }
             }
         })
 
@@ -97,7 +122,6 @@ class ChatFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             Log.d(TAG,"${repository.getAllChatMessagesFromFirebase(firebaseAuth.currentUser!!.uid,args.spUid)}")
             viewModel.attachListener(firebaseAuth.currentUser!!.uid,args.spUid)
-
         }
     }
 

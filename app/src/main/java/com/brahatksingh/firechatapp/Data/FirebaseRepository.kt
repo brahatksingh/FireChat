@@ -1,5 +1,6 @@
 package com.brahatksingh.firechatapp.Data
 
+import android.net.Uri
 import android.renderscript.Sampler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +9,19 @@ import com.brahatksingh.firechatapp.Data.Models.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.ArrayList
 
 object FirebaseRepository {
 
     private val TAG = "FIREBASE REPOSITORY FR"
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
 
     suspend fun getAllUsers() : ArrayList<UserInfo> {
         var userList = ArrayList<UserInfo>()
@@ -52,8 +58,13 @@ object FirebaseRepository {
         return chatMessages
     }
 
-    suspend fun sendMessage(message: String,uid : String,sp_uid : String) {
-        val messageObj = ChatMessage(uid,sp_uid,message,"0","${System.currentTimeMillis() /1000}",".")
+    suspend fun sendMessage(message: String,uid : String,sp_uid : String,isImage : Boolean = false) {
+        val messageObj = if(isImage) {
+            ChatMessage(uid,sp_uid,"Image","1","${System.currentTimeMillis() /1000}",message)
+        }
+        else {
+            ChatMessage(uid,sp_uid,message,"0","${System.currentTimeMillis() /1000}",".")
+        }
 
         var ref = firebaseDatabase.reference.child("messages").child(uid).child(sp_uid).push()
 
@@ -80,5 +91,22 @@ object FirebaseRepository {
             userInfo = snapshot.getValue(UserInfo::class.java)
         }.await()
         return userInfo ?: UserInfo()
+    }
+
+    suspend fun uploadImage(uri : Uri,uid:String,sp_uid: String,) {
+        var url = "https://firebasestorage.googleapis.com/v0/b/firechat-931d2.appspot.com/o/ProfileImages%2FAz8gt1KRjuRqWX21dbTHxFcldqD3.profileImage?alt=media&token=4f17807d-34d1-442e-87be-20d3e2030739"
+        val ref = firebaseStorage.getReference("/UserMedia/${UUID.randomUUID()}")
+        ref.putFile(uri).continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Log.d(TAG,"${task.exception}")
+            }
+            ref.downloadUrl.addOnSuccessListener {
+                url = it.toString()
+            }.addOnFailureListener{
+                Log.d(TAG,"$it ${it.message}")
+            }
+        }.await()
+
+        sendMessage(url,sp_uid,uid,true)
     }
 }

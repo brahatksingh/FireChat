@@ -101,6 +101,9 @@ class ChatMessagesAdapter(val context : Context, val userID : String, var messag
             return "DEF VALUE AS SIZE IS INVALID"
         }
         else {
+            if(messageList!![getLastPosition()].image.equals("1")) {
+                return "Image"
+            }
             return messageList!![getLastPosition()].messageText
         }
     }

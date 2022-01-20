@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".UI.Activities.MainActivity">
 
     <ImageView
@@ -19,7 +20,7 @@
 
     <EditText
         android:id="@+id/ca_etv_newmessage"
-        android:layout_width="0dp"
+        android:layout_width="280dp"
         android:layout_height="0dp"
         android:layout_margin="4dp"
         android:background="@drawable/drawable_for_etv"
@@ -39,7 +40,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ca_btn_send"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
@@ -48,22 +49,42 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/ca_btn_addImage"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ca_etv_newmessage"
         app:layout_constraintTop_toBottomOf="@id/ca_rv_messages"
 
         />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ca_btn_addImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:padding="8dp"
+        android:text="+"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ca_btn_send"
+        app:layout_constraintStart_toEndOf="@+id/ca_btn_send"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ca_rv_messages"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="4dp"
         app:layout_constraintBottom_toTopOf="@+id/ca_btn_send"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_message_foruser" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
