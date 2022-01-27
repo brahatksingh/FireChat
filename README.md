@@ -6,7 +6,7 @@
   <p align="center">
     FireChat is a messaging app like Whatsapp,Telegram which uses Firebase.
     <br />
-    It uses MVVM Architecure in a clean manner , uses Firebase Realtime Database to store information and chats.For saving recent chat uses Android Room Database. It uses the Firebase Storage to store Media which the users upload. It also uses Coroutines,LifecycleLibraries and FirebaseAuth. 
+    It uses the MVVM Architecure in a clean manner , uses Firebase Realtime Database to store information and chats.For saving recent chat it uses Android Room Database. Users' uploads are stored in Firebase Storage. It also uses Coroutines, LifecycleLibraries and FirebaseAuth. 
     <br />
     <a href="https://drive.google.com/file/d/1u6zhnIhQPF4VQlSp3RUROxe4rjgbbynd/view"><strong>Download APK »</strong></a>
     <br />
